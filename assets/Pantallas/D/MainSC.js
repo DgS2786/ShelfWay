@@ -1,24 +1,26 @@
 import * as React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-import { Searchbar, BottomNavigation, FAB } from 'react-native-paper';
+import { Searchbar, BottomNavigation, FAB, Button } from 'react-native-paper';
 import { ThemeContextProvider, useTheme } from '../../Resources/ThemeProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import TutorialDialog from './TutorialSC';
+import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 
 function MainScreen() {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [index, setIndex] = React.useState(1);
     const [showTutorial, setShowTutorial] = React.useState(false);
-
     const [routes] = React.useState([
         { key: 'ofertas', title: 'Ofertas', icon: 'tag-outline' },
         { key: 'mapa', title: 'Mapa', icon: 'map-marker-outline' },
         { key: 'config', title: 'Configuración', icon: 'cog-outline' },
     ]);
 
-    const { theme } = useTheme();
+    const { theme, toggleThemeType, isDarkTheme } = useTheme(); // ✅ correcto
     const [permission, requestPermission] = useCameraPermissions();
+    const navigation = useNavigation();
 
     React.useEffect(() => {
         if (!permission) return;
@@ -43,6 +45,15 @@ function MainScreen() {
 
     const renderScene = () => (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            {/* Botón modo oscuro / claro */}
+            <Button
+                mode="contained-tonal"
+                onPress={toggleThemeType}
+                style={{ alignSelf: 'center', marginBottom: 10 }}
+            >
+                {isDarkTheme ? '☀️ Modo claro' : '🌙 Modo oscuro'}
+            </Button>
+
             {/* Barra de búsqueda */}
             <Searchbar
                 placeholder="Buscar"
@@ -52,6 +63,11 @@ function MainScreen() {
                 inputStyle={{ color: theme.colors.text }}
                 style={[styles.searchbar, { backgroundColor: theme.colors.surface }]}
                 iconColor={theme.colors.primary}
+                onSubmitEditing={() => {
+                    if (searchQuery.trim() !== '') {
+                        navigation.navigate('Products', { query: searchQuery });
+                    }
+                }}
             />
 
             {/* Cámara y texto */}
@@ -72,6 +88,13 @@ function MainScreen() {
             <View style={{ flex: 1 }}>
                 {renderScene()}
             </View>
+
+            <StatusBar
+                style={isDarkTheme ? 'light' : 'dark'}
+                backgroundColor={theme.colors.background}
+                translucent={false}
+            />
+
 
             {/* Botón flotante de ayuda */}
             <FAB
@@ -111,9 +134,8 @@ function MainScreen() {
 
 export default function App() {
     return (
-        <ThemeContextProvider>
-            <MainScreen />
-        </ThemeContextProvider>
+
+        <MainScreen />
     );
 }
 
@@ -140,7 +162,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: 40,
-        marginTop: '-60%'
+        marginTop: '-60%',
     },
     cameraV: {
         width: 320,
@@ -153,7 +175,7 @@ const styles = StyleSheet.create({
     fab: {
         position: 'absolute',
         right: 30,
-        bottom: 150, // justo encima del BottomNavigation
+        bottom: 150,
         zIndex: 10,
         elevation: 6,
     },

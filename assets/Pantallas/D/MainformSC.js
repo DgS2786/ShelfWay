@@ -9,8 +9,6 @@ export default function MainForm({ navigation }) {
             <Text style={styles.text2}>Bienvenido a ShelfWay, donde perderte en las compras es cosa del pasado!</Text>
             <Button mode='contained' style={styles.button} labelStyle={{ fontSize: 18 }} onPress={() => navigation.navigate('LoginSC')}>Iniciar Sesión</Button>
             <Button mode='contained' style={styles.button} labelStyle={{ fontSize: 18 }} onPress={() => navigation.navigate('RegisterSC')}>Registrarse</Button>
-            
-            
             <Button mode='contained' style={styles.button} labelStyle={{ fontSize: 18 }} onPress={() => navigation.navigate('Main')}>Saltar loggin</Button>
 
         </View>

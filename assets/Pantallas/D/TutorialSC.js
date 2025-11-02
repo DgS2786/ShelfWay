@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
-import { Button, Dialog, Portal, Text, useTheme } from 'react-native-paper';
+import { Button, Dialog, Portal, Text } from 'react-native-paper';
+import { useTheme } from '../../Resources/ThemeProvider'; // Ajusta la ruta si es diferente
 
 export default function TutorialDialog({ visible, onDismiss }) {
   const [step, setStep] = React.useState(1);
-  const theme = useTheme();
+  const { theme } = useTheme(); // Obtenemos tema actual del contexto
 
   const steps = [
     {
@@ -51,16 +52,18 @@ export default function TutorialDialog({ visible, onDismiss }) {
       <Dialog
         visible={visible}
         onDismiss={onDismiss}
-        style={[styles.dialog, { backgroundColor: '#fff' }]}
+        style={[styles.dialog, { backgroundColor: theme.colors.dialogS }]}
       >
-        <Dialog.Title style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}>
+        <Dialog.Title
+          style={{ color: theme.colors.text, textAlign: 'center' }}
+        >
           {steps[step - 1].title}
         </Dialog.Title>
 
         <Dialog.Content>
           <Text
             variant="bodyMedium"
-            style={{ color: theme.colors.onSurfaceVariant, textAlign: 'center' }}
+            style={{ color: theme.colors.text, textAlign: 'center' }}
           >
             {steps[step - 1].text}
           </Text>
@@ -68,7 +71,11 @@ export default function TutorialDialog({ visible, onDismiss }) {
 
         <Dialog.Actions style={styles.actions}>
           {step > 1 && (
-            <Button mode="outlined" onPress={handlePrev} textColor={theme.colors.primary}>
+            <Button
+              mode="outlined"
+              onPress={handlePrev}
+              textColor={theme.colors.primary}
+            >
               Anterior
             </Button>
           )}

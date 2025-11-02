@@ -57,13 +57,13 @@ const darkTheme = {
         buttonText: '#FFFFFF',
         textM: '#90CAF9',
         btIcon: '#90CAF9',
-        inactiveT: '#64748B',         // Gris suave
+        inactiveT: '#99a6b9ff',         // Gris suave
         activeT: '#60A5FA',           // Azul cielo atractivo
         red: '#F87171',
         dialogS: '#1E293B',
         btIconIn: '#5782bbff',
         inactiveT: '#2564b0ff',
-        activeT: '#a5d5d0ff',
+        activeT: '#577c9aff',
     },
 };
 

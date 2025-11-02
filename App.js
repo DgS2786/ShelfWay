@@ -7,7 +7,7 @@ import MainScreen from './assets/Pantallas/D/MainSC';
 import MainForm from './assets/Pantallas/D/MainformSC';
 import LoginScreen from './assets/Pantallas/D/LogginSC';
 import RegisterScreen from './assets/Pantallas/D/RegisterSC';
-
+import ProductsScreen from './assets/Pantallas/D/ProductSC';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,11 +16,12 @@ export default function App() {
     <ThemeContextProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Inicial" component={SplashScreen} />
+          <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="MainForm" component={MainForm} />
-          <Stack.Screen name="LoginSC" component={LoginScreen} />
           <Stack.Screen name="RegisterSC" component={RegisterScreen} />
+          <Stack.Screen name="LoginSC" component={LoginScreen} />
           <Stack.Screen name="Main" component={MainScreen} />
+          <Stack.Screen name="Products" component={ProductsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeContextProvider>
