@@ -7,10 +7,12 @@ import { useTheme } from '../../Resources/ThemeProvider';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useFocusEffect } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-
+import { useTranslation } from 'react-i18next';
 
 export default function ProductsScreen({ route }) {
-    const { theme, toggleThemeType, isDarkTheme } = useTheme(); // ✅ correcto
+    const { theme, isDarkTheme } = useTheme(); // ✅ correcto
+    const { t, i18n } = useTranslation();
+    const currentLang = i18n.language || 'es';
     const { query: searchQuery } = route.params;
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -38,9 +40,9 @@ export default function ProductsScreen({ route }) {
                     const data = doc.data();
                     return {
                         id: doc.id,
-                        nombreEs: data.nombre?.es?.toLowerCase() || '',
-                        descripcionEs: data.descripcion?.es?.toLowerCase() || '',
-                        tagsEs: data.tags?.es?.toLowerCase() || '',
+                        nombre: data.nombre?.[currentLang]?.toLowerCase() || '',
+                        descripcion: data.descripcion?.[currentLang]?.toLowerCase() || '',
+                        tags: data.tags?.[currentLang]?.toLowerCase() || '',
                         price: data.precio || 0,
                         image: data.imagen || null,
                         anaquel: data.anaquel || '',
@@ -51,9 +53,9 @@ export default function ProductsScreen({ route }) {
                 const queryLower = searchQuery.toLowerCase();
                 const filtered = allProducts.filter(
                     p =>
-                        p.nombreEs.includes(queryLower) ||
-                        p.descripcionEs.includes(queryLower) ||
-                        p.tagsEs.includes(queryLower)
+                        p.nombre.includes(queryLower) ||
+                        p.descripcion.includes(queryLower) ||
+                        p.tags.includes(queryLower)
                 );
 
                 setProducts(filtered);
@@ -65,7 +67,7 @@ export default function ProductsScreen({ route }) {
         };
 
         fetchProducts();
-    }, [searchQuery]);
+    }, [searchQuery, currentLang]);
 
     if (loading) {
         return (
@@ -78,7 +80,9 @@ export default function ProductsScreen({ route }) {
     if (products.length === 0) {
         return (
             <View style={styles.emptyContainer}>
-                <Text style={{ color: colors.text, fontSize: 18 }}>No se encontraron productos.</Text>
+                <Text style={{ color: colors.text, fontSize: 18 }}>
+                    {t('productsScreen.noProducts')}
+                </Text>
             </View>
         );
     }
@@ -100,12 +104,14 @@ export default function ProductsScreen({ route }) {
                             {item.image && <Image source={{ uri: item.image }} style={styles.image} />}
                             <View style={styles.info}>
                                 <Text variant="titleLarge" style={{ color: colors.text, fontWeight: 'bold' }}>
-                                    {item.nombreEs}
+                                    {item.nombre}
                                 </Text>
                                 <Text variant="bodyMedium" style={{ color: colors.text, marginVertical: 5 }}>
-                                    {item.descripcionEs}
+                                    {item.descripcion}
                                 </Text>
-                                <Text style={{ color: colors.primary, fontWeight: 'bold' }}>${item.price}</Text>
+                                <Text style={{ color: colors.primary, fontWeight: 'bold' }}>
+                                    ${item.price}
+                                </Text>
                             </View>
                         </View>
                     </Card>

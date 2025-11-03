@@ -8,8 +8,6 @@ import MainForm from './assets/Pantallas/D/MainformSC';
 import LoginScreen from './assets/Pantallas/D/LogginSC';
 import RegisterScreen from './assets/Pantallas/D/RegisterSC';
 import ProductsScreen from './assets/Pantallas/D/ProductSC';
-import './assets/Resources/languaje';
-
 
 const Stack = createNativeStackNavigator();
 

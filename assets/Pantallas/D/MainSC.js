@@ -7,18 +7,14 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import TutorialDialog from './TutorialSC';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
+import { useTranslation } from 'react-i18next';
 
 function MainScreen() {
+    const { t } = useTranslation();
     const [searchQuery, setSearchQuery] = React.useState('');
     const [index, setIndex] = React.useState(1);
     const [showTutorial, setShowTutorial] = React.useState(false);
-    const [routes] = React.useState([
-        { key: 'ofertas', title: 'Ofertas', icon: 'tag-outline' },
-        { key: 'mapa', title: 'Mapa', icon: 'map-marker-outline' },
-        { key: 'config', title: 'Configuración', icon: 'cog-outline' },
-    ]);
-
-    const { theme, toggleThemeType, isDarkTheme } = useTheme(); // ✅ correcto
+    const { theme, toggleThemeType, isDarkTheme } = useTheme();
     const [permission, requestPermission] = useCameraPermissions();
     const navigation = useNavigation();
 
@@ -27,10 +23,17 @@ function MainScreen() {
         if (!permission.granted) requestPermission();
     }, [permission]);
 
+    // Se recalculan los títulos dinámicamente según el idioma
+    const routes = React.useMemo(() => [
+        { key: 'ofertas', title: t('mainScreen.bottomNav.offers'), icon: 'tag-outline' },
+        { key: 'mapa', title: t('mainScreen.bottomNav.map'), icon: 'map-marker-outline' },
+        { key: 'config', title: t('mainScreen.bottomNav.settings'), icon: 'cog-outline' },
+    ], [t]);
+
     if (!permission) {
         return (
             <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>Solicitando permiso de cámara...</Text>
+                <Text style={styles.permissionText}>{t('mainScreen.camera.requestingPermission')}</Text>
             </View>
         );
     }
@@ -38,7 +41,7 @@ function MainScreen() {
     if (!permission.granted) {
         return (
             <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>No se concedió el permiso de cámara.</Text>
+                <Text style={styles.permissionText}>{t('mainScreen.camera.denied')}</Text>
             </View>
         );
     }
@@ -51,12 +54,12 @@ function MainScreen() {
                 onPress={toggleThemeType}
                 style={{ alignSelf: 'center', marginBottom: 10 }}
             >
-                {isDarkTheme ? '☀️ Modo claro' : '🌙 Modo oscuro'}
+                {isDarkTheme ? t('mainScreen.theme.lightMode') : t('mainScreen.theme.darkMode')}
             </Button>
 
             {/* Barra de búsqueda */}
             <Searchbar
-                placeholder="Buscar"
+                placeholder={t('mainScreen.searchPlaceholder')}
                 value={searchQuery}
                 onChangeText={setSearchQuery}
                 placeholderTextColor={theme.colors.placeholder}
@@ -73,7 +76,7 @@ function MainScreen() {
             {/* Cámara y texto */}
             <View style={styles.cameraWrapper}>
                 <Text style={[styles.infoText, { color: theme.colors.text }]}>
-                    Escanea un QR o código de barras
+                    {t('mainScreen.scanInfo')}
                 </Text>
                 <View style={styles.cameraV}>
                     <CameraView style={StyleSheet.absoluteFillObject} />
@@ -94,7 +97,6 @@ function MainScreen() {
                 backgroundColor={theme.colors.background}
                 translucent={false}
             />
-
 
             {/* Botón flotante de ayuda */}
             <FAB
@@ -133,10 +135,7 @@ function MainScreen() {
 }
 
 export default function App() {
-    return (
-
-        <MainScreen />
-    );
+    return <MainScreen />;
 }
 
 const styles = StyleSheet.create({
