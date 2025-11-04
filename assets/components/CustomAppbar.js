@@ -3,9 +3,10 @@ import { Appbar, useTheme } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 
 /**
- * @param {object} props 
- * @param {string} props.title 
- * @returns {JSX.Element} 
+ * Barra de aplicación superior reutilizable con botón de retroceso y título centrado.
+ * @param {object} props - Propiedades del componente.
+ * @param {string} props.title - El texto que se muestra en el centro del encabezado (ej: "PERSONALIZACIÓN").
+ * @returns {JSX.Element} El componente de la barra de aplicación.
  */
 export default function CustomAppbar({ title }) {
     const theme = useTheme(); 

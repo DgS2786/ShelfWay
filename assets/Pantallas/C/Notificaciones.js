@@ -19,8 +19,7 @@ Notifications.setNotificationHandler({
 
 function NotificacionesScreen() {
     const paperTheme = useTheme();
-    // 🔹 CAMBIO: Obtenemos theme E i18n
-    const { theme, i18n } = useAppTheme();
+    const { theme } = useAppTheme();
 
     // Estados de control
     const [isOffersEnabled, setIsOffersEnabled] = React.useState(false);
@@ -57,8 +56,7 @@ function NotificacionesScreen() {
         <SafeAreaView style={[styles.safeArea, { backgroundColor: paperTheme.colors.background }]}>
             <StatusBar style="light" backgroundColor={paperTheme.colors.primary} />
             
-            {/* 🔹 CAMBIO: Título traducido */}
-            <CustomAppbar title={i18n.header_title_notifications} />
+            <CustomAppbar title="NOTIFICACIONES" />
 
             <ScrollView contentContainerStyle={styles.scrollContent} style={styles.scrollView}>
                 <View style={styles.sectionContainer}>
@@ -66,30 +64,27 @@ function NotificacionesScreen() {
                     {/* El mensaje de advertencia NO se mostrará ya que el permiso es true por defecto */}
                     {!notificationPermission && (
                         <View style={[styles.warningBox, { backgroundColor: paperTheme.colors.notification }]}>
-                            {/* 🔹 CAMBIO: Texto de advertencia traducido */}
                             <Text style={[styles.warningText, { fontSize: warningSize }]}>
-                                {i18n.notifications_warning}
+                                Las notificaciones están bloqueadas a nivel del sistema operativo. Por favor, habilítelas en la configuración de tu teléfono.
                             </Text>
                         </View>
                     )}
 
-                    {/* 🔹 CAMBIO: Descripción traducida */}
                     <Text style={[styles.descriptionText, { 
                         color: paperTheme.colors.onSurfaceVariant,
                         fontSize: subtitleSize
                     }]}>
-                        {i18n.notifications_description}
+                        Configura las notificaciones según tus preferencias:
                     </Text>
                     <Divider style={styles.divider} />
 
                     {/* Interruptores (mantienen la funcionalidad local) */}
                     <View style={styles.switchContainer}>
-                        {/* 🔹 CAMBIO: Etiqueta traducida */}
                         <Text style={[styles.switchLabel, { 
                             color: paperTheme.colors.text,
                             fontSize: labelSize 
                         }]}>
-                            {i18n.notifications_label_offers}
+                            DESACTIVAR/ACTIVAR{'\n'}NOTIFICACIONES DE NUEVAS OFERTAS
                         </Text>
                         <Switch
                             value={isOffersEnabled}
@@ -100,12 +95,11 @@ function NotificacionesScreen() {
                     <Divider style={styles.divider} />
 
                     <View style={styles.switchContainer}>
-                        {/* 🔹 CAMBIO: Etiqueta traducida */}
                         <Text style={[styles.switchLabel, { 
                             color: paperTheme.colors.text,
                             fontSize: labelSize 
                         }]}>
-                            {i18n.notifications_label_events}
+                            DESACTIVAR/ACTIVAR{'\n'}NOTIFICACIONES DE NUEVOS EVENTOS
                         </Text>
                         <Switch
                             value={isEventsEnabled}
@@ -116,12 +110,11 @@ function NotificacionesScreen() {
                     <Divider style={styles.divider} />
 
                     <View style={styles.switchContainer}>
-                        {/* 🔹 CAMBIO: Etiqueta traducida */}
                         <Text style={[styles.switchLabel, { 
                             color: paperTheme.colors.text,
                             fontSize: labelSize 
                         }]}>
-                            {i18n.notifications_label_products}
+                            DESACTIVAR/ACTIVAR{'\n'}NOTIFICACIONES DE NUEVOS PRODUCTOS
                         </Text>
                         <Switch
                             value={isProductsEnabled}
