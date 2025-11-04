@@ -41,6 +41,14 @@ import NotificacionesScreen from './assets/Pantallas/C/Notificaciones';
 import IdiomaScreen from './assets/Pantallas/C/Idioma';
 
 
+// ⭐ Nuevas Importaciones de Vistas
+import ReporteScreen from './assets/Pantallas/C/Reporte'; // Ajusta la ruta si es necesario (ej: './assets/Pantallas/ReporteSC')
+import PersonalizacionScreen from './assets/Pantallas/C/Personalizacion'; // Ajusta la ruta si es necesario
+import PreferenciasScreen from './assets/Pantallas/C/Preferencias';
+import NotificacionesScreen from './assets/Pantallas/C/Notificaciones';
+import IdiomaScreen from './assets/Pantallas/C/Idioma';
+
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
