@@ -75,6 +75,10 @@ function MainScreen() {
     const { width, height } = Dimensions.get('window');
     const isPortrait = height >= width;
 
+    // Adaptatividad: Obtener dimensiones para ajustar la cámara en horizontal
+    const { width, height } = Dimensions.get('window');
+    const isPortrait = height >= width;
+
     React.useEffect(() => {
         if (!permission) return;
         if (!permission.granted) requestPermission();

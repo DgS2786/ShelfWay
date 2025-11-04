@@ -76,6 +76,80 @@ const BASE_FONT_SIZE = 16; // Tamaño de fuente base por defecto (M)
 
 // --- Definiciones de Temas (lightTheme y darkTheme se mantienen igual) ---
 
+// ⭐ DICCIONARIO DE TRADUCCIÓN (i18n)
+const I18N = {
+    ESPAÑOL: {
+        // --- Común a Configuración ---
+        header_title_preferences: "PREFERENCIAS",
+        header_title_notifications: "NOTIFICACIONES",
+        header_title_language: "IDIOMA",
+        theme_title: "TEMA",
+        theme_description: "Elige un tema:",
+        theme_light: "CLARO",
+        theme_dark: "OSCURO",
+        font_size_title: "TAMAÑO LETRA",
+        font_size_description: "Elige un tamaño de letra:",
+        
+        // ⭐ --- Cadenas de REPORTE ---
+        header_title_reporte: "REPORTE",
+        report_help_title: "¿Necesitas ayuda?",
+        report_description: "Completa tu reporte aquí para poder brindarte atención personalizada.",
+        form_name_label: "Nombre:",
+        form_name_placeholder: "Ingresa tu nombre",
+        form_lastname_label: "Apellidos:",
+        form_lastname_placeholder: "Ingresa tus apellidos",
+        form_email_label: "Correo electrónico:",
+        form_email_placeholder: "Ingresa tu correo electrónico",
+        form_problem_label: "Describe a continuación tu problema:",
+        button_send: "ENVIAR",
+        dialog_title_received: "REPORTE RECIBIDO",
+        dialog_content_contact_part1: "Nos pondremos en contacto contigo a través de ",
+        dialog_content_contact_part2: ".",
+        button_ok: "OK",
+        error_complete_fields: "Por favor, completa todos los campos antes de enviar.",
+    },
+    ENGLISH: {
+        // --- Común a Configuración ---
+        header_title_preferences: "PREFERENCES",
+        header_title_notifications: "NOTIFICATIONS",
+        header_title_language: "LANGUAGE",
+        theme_title: "THEME",
+        theme_description: "Choose a theme:",
+        theme_light: "LIGHT",
+        theme_dark: "DARK",
+        font_size_title: "FONT SIZE",
+        font_size_description: "Choose a font size:",
+        
+        // ⭐ --- Cadenas de REPORT ---
+        header_title_reporte: "REPORT",
+        report_help_title: "DO YOU NEED SOME HELP?",
+        report_description: "Complete your report here so we can provide you with personalized assistance.",
+        form_name_label: "First Name:",
+        form_name_placeholder: "Enter your first name",
+        form_lastname_label: "Last Name:",
+        form_lastname_placeholder: "Enter your last name",
+        form_email_label: "Email:",
+        form_email_placeholder: "Enter your email",
+        form_problem_label: "Describe your problem below:",
+        button_send: "SEND",
+        dialog_title_received: "REPORT RECEIVED",
+        dialog_content_contact_part1: "We will contact you via ",
+        dialog_content_contact_part2: ".",
+        button_ok: "OK",
+        error_complete_fields: "Please complete all fields before submitting.",
+    },
+};
+
+// ⭐ LÓGICA DE ESCALADO GLOBAL
+const FONT_SCALES = {
+    0: -2, // CH (Base - 2px)
+    1: 0,  // M (Base + 0px)
+    2: 2,  // G (Base + 2px)
+};
+const BASE_FONT_SIZE = 16; // Tamaño de fuente base por defecto (M)
+
+// --- Definiciones de Temas (lightTheme y darkTheme se mantienen igual) ---
+
 const lightTheme = {
     ...NavigationDefaultTheme,
     ...PaperDefaultTheme,
