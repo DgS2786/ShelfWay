@@ -2,6 +2,8 @@ import * as React from 'react';
 import { ThemeContextProvider } from './assets/Resources/ThemeProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { PaperProvider } from 'react-native-paper'; // Necesario si usas PaperProvider en RootComponent
+
 import SplashScreen from './assets/Pantallas/D/SplashSC';
 import MainScreen from './assets/Pantallas/D/MainSC';
 import MainForm from './assets/Pantallas/D/MainformSC';
@@ -9,11 +11,24 @@ import LoginScreen from './assets/Pantallas/D/LogginSC';
 import RegisterScreen from './assets/Pantallas/D/RegisterSC';
 import ProductsScreen from './assets/Pantallas/D/ProductSC';
 
+// ⭐ Nuevas Importaciones de Vistas
+import ReporteScreen from './assets/Pantallas/C/Reporte'; // Ajusta la ruta si es necesario (ej: './assets/Pantallas/ReporteSC')
+import PersonalizacionScreen from './assets/Pantallas/C/Personalizacion'; // Ajusta la ruta si es necesario
+import PreferenciasScreen from './assets/Pantallas/C/Preferencias';
+import NotificacionesScreen from './assets/Pantallas/C/Notificaciones';
+import IdiomaScreen from './assets/Pantallas/C/Idioma';
+
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
+    // Es buena práctica envolver aquí con PaperProvider si lo estás usando
     <ThemeContextProvider>
+      {/* NOTA: Si usas PaperProvider, deberías usar la estructura que te envié antes: 
+        <PaperProvider theme={theme}> <NavigationContainer>...</PaperProvider>
+        Pero por ahora, solo corregiremos la navegación en tu estructura actual.
+      */}
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Splash" component={SplashScreen} />
@@ -22,6 +37,13 @@ export default function App() {
           <Stack.Screen name="LoginSC" component={LoginScreen} />
           <Stack.Screen name="Main" component={MainScreen} />
           <Stack.Screen name="Products" component={ProductsScreen} />
+          
+          {/* ⭐ Registro de las Nuevas Vistas */}
+          <Stack.Screen name="Reporte" component={ReporteScreen} />
+          <Stack.Screen name="Personalizacion" component={PersonalizacionScreen} />
+          <Stack.Screen name="Preferencias" component={PreferenciasScreen} />
+          <Stack.Screen name="Notificaciones" component={NotificacionesScreen} />
+          <Stack.Screen name="Idioma" component={IdiomaScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeContextProvider>

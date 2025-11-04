@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Searchbar, BottomNavigation, FAB, Button } from 'react-native-paper';
 import { ThemeContextProvider, useTheme } from '../../Resources/ThemeProvider';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; // ⭐ CORREGIDO
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import TutorialDialog from './TutorialSC';
 import { useNavigation } from '@react-navigation/native';
@@ -18,9 +18,13 @@ function MainScreen() {
         { key: 'config', title: 'Configuración', icon: 'cog-outline' },
     ]);
 
-    const { theme, toggleThemeType, isDarkTheme } = useTheme(); // ✅ correcto
+    const { theme, toggleThemeType, isDarkTheme } = useTheme(); 
     const [permission, requestPermission] = useCameraPermissions();
     const navigation = useNavigation();
+
+    // Adaptatividad: Obtener dimensiones para ajustar la cámara en horizontal
+    const { width, height } = Dimensions.get('window');
+    const isPortrait = height >= width;
 
     React.useEffect(() => {
         if (!permission) return;
@@ -43,8 +47,18 @@ function MainScreen() {
         );
     }
 
+    // Lógica para Navegación de Desarrollo
+    const navigateToReporte = () => navigation.navigate('Reporte');
+    const navigateToPersonalizacion = () => navigation.navigate('Personalizacion');
+    const navigateToPreferencias = () => navigation.navigate('Preferencias');
+    const navigateToNotificaciones = () => navigation.navigate('Notificaciones'); 
+    const navigateToIdioma = () => navigation.navigate('Idioma'); 
+    // ⭐ NUEVA FUNCIÓN
+
+
     const renderScene = () => (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            
             {/* Botón modo oscuro / claro */}
             <Button
                 mode="contained-tonal"
@@ -54,6 +68,16 @@ function MainScreen() {
                 {isDarkTheme ? '☀️ Modo claro' : '🌙 Modo oscuro'}
             </Button>
 
+            {/* BOTONES DE NAVEGACIÓN DE DESARROLLO TEMPORAL */}
+            <View style={styles.devButtons}>
+                <Button mode="outlined" compact onPress={navigateToReporte}>
+                    Reporte
+                </Button>
+                <Button mode="outlined" compact onPress={navigateToPersonalizacion}>
+                    Personaliz.
+                </Button>
+            </View>
+            
             {/* Barra de búsqueda */}
             <Searchbar
                 placeholder="Buscar"
@@ -71,11 +95,11 @@ function MainScreen() {
             />
 
             {/* Cámara y texto */}
-            <View style={styles.cameraWrapper}>
+            <View style={[styles.cameraWrapper, isPortrait ? styles.cameraWrapperPortrait : styles.cameraWrapperLandscape]}>
                 <Text style={[styles.infoText, { color: theme.colors.text }]}>
                     Escanea un QR o código de barras
                 </Text>
-                <View style={styles.cameraV}>
+                <View style={[styles.cameraV, isPortrait ? styles.cameraVPortrait : styles.cameraVLandscape]}>
                     <CameraView style={StyleSheet.absoluteFillObject} />
                 </View>
             </View>
@@ -145,6 +169,14 @@ const styles = StyleSheet.create({
         paddingTop: 60,
         justifyContent: 'flex-start',
     },
+    // ESTILOS DE DESARROLLO
+    devButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '95%', // Aumentamos el ancho para que quepan los 4 botones
+        alignSelf: 'center',
+        marginBottom: 10,
+    },
     searchbar: {
         width: '85%',
         alignSelf: 'center',
@@ -162,15 +194,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: 40,
-        marginTop: '-60%',
+        // Eliminado: marginTop: '-60%',
+    },
+    // NUEVOS ESTILOS PARA ADAPTAR CÁMARA
+    cameraWrapperPortrait: {
+        // En vertical, usa flex para ocupar el espacio restante
+    },
+    cameraWrapperLandscape: {
+        // En horizontal, es más compacto
+        justifyContent: 'flex-start',
+        paddingTop: 10,
     },
     cameraV: {
-        width: 320,
-        aspectRatio: 1,
         borderRadius: 20,
         overflow: 'hidden',
         backgroundColor: '#000',
         elevation: 8,
+    },
+    cameraVPortrait: {
+        width: 320,
+        aspectRatio: 1, // Cuadrado
+    },
+    cameraVLandscape: {
+        // Reducir el tamaño de la cámara en horizontal para que quepa mejor
+        width: Dimensions.get('window').height * 0.5, // 50% de la altura (que es el ancho en landscape)
+        aspectRatio: 1,
     },
     fab: {
         position: 'absolute',
