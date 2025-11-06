@@ -1,130 +1,200 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text, TouchableOpacity } from 'react-native';
-import { Button } from 'react-native-paper';
-import { useTranslation } from 'react-i18next';
-import i18n from '../../Resources/languaje';
+import * as React from 'react';
+import { View, StyleSheet, Text } from 'react-native';
+import { Searchbar, BottomNavigation, FAB, Button } from 'react-native-paper';
+import { ThemeContextProvider, useTheme } from '../../Resources/ThemeProvider';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { CameraView, useCameraPermissions } from 'expo-camera';
+import TutorialDialog from './TutorialSC';
+import { useNavigation } from '@react-navigation/native';
+import { StatusBar } from 'expo-status-bar';
 
-export default function MainForm({ navigation }) {
-    const { t } = useTranslation();
-    const [language, setLanguage] = useState(i18n.language || 'es');
-    const [dropdownOpen, setDropdownOpen] = useState(false);
+function MainScreen() {
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const [index, setIndex] = React.useState(1);
+    const [showTutorial, setShowTutorial] = React.useState(false);
+    const [routes] = React.useState([
+        { key: 'ofertas', title: 'Ofertas', icon: 'tag-outline' },
+        { key: 'mapa', title: 'Mapa', icon: 'map-marker-outline' },
+        { key: 'config', title: 'Configuración', icon: 'cog-outline' },
+    ]);
 
-    const toggleDropdown = () => setDropdownOpen(!dropdownOpen);
-    const selectLanguage = (lang) => {
-        setLanguage(lang);
-        i18n.changeLanguage(lang);
-        setDropdownOpen(false);
-    };
-    
+    const { theme, toggleThemeType, isDarkTheme } = useTheme(); // ✅ correcto
+    const [permission, requestPermission] = useCameraPermissions();
+    const navigation = useNavigation();
+
+    React.useEffect(() => {
+        if (!permission) return;
+        if (!permission.granted) requestPermission();
+    }, [permission]);
+
+    if (!permission) {
+        return (
+            <View style={styles.permissionContainer}>
+                <Text style={styles.permissionText}>Solicitando permiso de cámara...</Text>
+            </View>
+        );
+    }
+
+    if (!permission.granted) {
+        return (
+            <View style={styles.permissionContainer}>
+                <Text style={styles.permissionText}>No se concedió el permiso de cámara.</Text>
+            </View>
+        );
+    }
+
+    const renderScene = () => (
+        <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            {/* Botón modo oscuro / claro */}
+            <Button
+                mode="contained-tonal"
+                onPress={toggleThemeType}
+                style={{ alignSelf: 'center', marginBottom: 10 }}
+            >
+                {isDarkTheme ? '☀️ Modo claro' : '🌙 Modo oscuro'}
+            </Button>
+
+            {/* Barra de búsqueda */}
+            <Searchbar
+                placeholder="Buscar"
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                placeholderTextColor={theme.colors.placeholder}
+                inputStyle={{ color: theme.colors.text }}
+                style={[styles.searchbar, { backgroundColor: theme.colors.surface }]}
+                iconColor={theme.colors.primary}
+                onSubmitEditing={() => {
+                    if (searchQuery.trim() !== '') {
+                        navigation.navigate('Products', { query: searchQuery });
+                    }
+                }}
+            />
+
+            {/* Cámara y texto */}
+            <View style={styles.cameraWrapper}>
+                <Text style={[styles.infoText, { color: theme.colors.text }]}>
+                    Escanea un QR o código de barras
+                </Text>
+                <View style={styles.cameraV}>
+                    <CameraView style={StyleSheet.absoluteFillObject} />
+                </View>
+            </View>
+        </View>
+    );
+
     return (
-        <View style={styles.container}>
-            {/* Selector de idioma simple */}
-            <View style={styles.dropdownContainer}>
-                <TouchableOpacity onPress={toggleDropdown} style={styles.languageButton}>
-                    <Text style={styles.languageText}>{language === 'es' ? 'Español' : 'English'}</Text>
-                </TouchableOpacity>
-                {dropdownOpen && (
-                    <View style={styles.dropdownList}>
-                        <TouchableOpacity onPress={() => selectLanguage('es')} style={styles.dropdownItem}>
-                            <Text style={{color:'#fff'}}>Español</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => selectLanguage('en')} style={styles.dropdownItem}>
-                            <Text style={{color:'#fff'}} >English</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
+        <View style={{ flex: 1 }}>
+            {/* Contenido principal */}
+            <View style={{ flex: 1 }}>
+                {renderScene()}
             </View>
 
-            {/* Contenido original intacto */}
-            <Text style={styles.text}>{t('appName')}</Text>
-            <Image source={require('../../Splash.png')} style={styles.image} resizeMode="contain" />
-            <Text style={styles.text2}>{t('welcomeText')}</Text>
+            <StatusBar
+                style={isDarkTheme ? 'light' : 'dark'}
+                backgroundColor={theme.colors.background}
+                translucent={false}
+            />
 
-            <Button
-                mode='contained'
-                style={styles.button}
-                labelStyle={{ fontSize: 18 }}
-                onPress={() => navigation.navigate('LoginSC')}
-            >
-                {t('login')}
-            </Button>
-            <Button
-                mode='contained'
-                style={styles.button}
-                labelStyle={{ fontSize: 18 }}
-                onPress={() => navigation.navigate('RegisterSC')}
-            >
-                {t('registerB')}
-            </Button>
-            <Button
-                mode='contained'
-                style={styles.button}
-                labelStyle={{ fontSize: 18 }}
-                onPress={() => navigation.navigate('Main')}
-            >
-                {t('skipLogin')}
-            </Button>
+
+            {/* Botón flotante de ayuda */}
+            <FAB
+                icon="help-circle-outline"
+                style={[styles.fab, { backgroundColor: theme.colors.primary }]}
+                color={theme.colors.onPrimary}
+                onPress={() => setShowTutorial(true)}
+            />
+
+            {/* Dialog del tutorial */}
+            <TutorialDialog
+                visible={showTutorial}
+                onDismiss={() => setShowTutorial(false)}
+            />
+
+            {/* Navegación inferior */}
+            <BottomNavigation
+                navigationState={{ index, routes }}
+                onIndexChange={setIndex}
+                renderScene={() => null}
+                barStyle={{ backgroundColor: theme.colors.menuBg }}
+                activeColor={theme.colors.btIcon}
+                inactiveColor={theme.colors.btIconIn}
+                style={styles.bottomNav}
+                theme={{ colors: { secondaryContainer: theme.colors.activeT } }}
+                renderIcon={({ route, focused }) => (
+                    <MaterialCommunityIcons
+                        name={route.icon}
+                        size={24}
+                        color={focused ? theme.colors.btIcon : theme.colors.btIconIn}
+                    />
+                )}
+            />
         </View>
+    );
+}
+
+export default function App() {
+    return (
+
+        <MainScreen />
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 60,
+        justifyContent: 'flex-start',
+    },
+    searchbar: {
+        width: '85%',
+        alignSelf: 'center',
+        marginBottom: 20,
+        borderRadius: 20,
+    },
+    infoText: {
+        fontSize: 22,
+        fontWeight: '500',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    cameraWrapper: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: 20,
-        backgroundColor: '#fff',
+        paddingBottom: 40,
+        marginTop: '-60%',
     },
-    dropdownContainer: {
-        position: 'absolute',
-        top: 50,
-        right: 20,
-    },
-    languageButton: {
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        backgroundColor: '#1976d2ff',
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: '#ccc',
-    },
-    languageText: {
-        fontSize: 16,
-        color: '#ffffffff',
-    },
-    dropdownList: {
-        marginTop: 5,
-        backgroundColor: '#1976d2ff',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
+    cameraV: {
+        width: 320,
+        aspectRatio: 1,
+        borderRadius: 20,
         overflow: 'hidden',
+        backgroundColor: '#000',
+        elevation: 8,
     },
-    dropdownItem: {
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        color: '#fff'
+    fab: {
+        position: 'absolute',
+        right: 30,
+        bottom: 150,
+        zIndex: 10,
+        elevation: 6,
     },
-    image: {
-        width: 230,
-        height: 230,
-        marginBottom: 20,
+    bottomNav: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
     },
-    text: {
-        fontSize: 65,
-        color: '#000',
-        marginBottom: 10,
+    permissionContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000',
     },
-    text2: {
-        fontSize: 18.5,
-        color: '#000',
+    permissionText: {
+        color: '#fff',
+        fontSize: 20,
         textAlign: 'center',
-        marginBottom: 25,
-    },
-    button: {
-        width: 300,
-        height: 43,
-        marginBottom: 20,
+        paddingHorizontal: 20,
     },
 });
