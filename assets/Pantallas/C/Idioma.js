@@ -36,11 +36,11 @@ function IdiomaScreen() {
             <ScrollView contentContainerStyle={styles.scrollContent} style={styles.scrollView}>
                 <View style={styles.sectionContainer}>
                     
+                    {/* ⭐ CAMBIO: Texto de descripción alineado al centro */}
                     <Text style={[styles.descriptionText, { 
                         color: paperTheme.colors.onSurfaceVariant,
                         fontSize: subtitleSize
                     }]}>
-                        {/* ⭐ Usamos la cadena traducida para la descripción */}
                         {i18n.language_description}
                     </Text>
                     <Divider style={styles.divider} />
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     },
     descriptionText: {
         marginBottom: 15,
-        textAlign: 'center',
+        textAlign: 'center', // Alineación central
     },
     divider: {
         marginVertical: 10,
