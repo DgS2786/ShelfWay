@@ -7,6 +7,8 @@ import { CameraView, useCameraPermissions } from 'expo-camera';
 import TutorialDialog from './TutorialSC';
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
+import ConfigScreen from './ConfigScreen';
+import OfertasScreen from './OfertasSC'; // Importa OfertasScreen
 
 function MainScreen() {
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -18,7 +20,7 @@ function MainScreen() {
         { key: 'config', title: 'Configuración', icon: 'cog-outline' },
     ]);
 
-    const { theme, toggleThemeType, isDarkTheme } = useTheme(); // ✅ correcto
+    const { theme, toggleThemeType, isDarkTheme } = useTheme();
     const [permission, requestPermission] = useCameraPermissions();
     const navigation = useNavigation();
 
@@ -27,23 +29,8 @@ function MainScreen() {
         if (!permission.granted) requestPermission();
     }, [permission]);
 
-    if (!permission) {
-        return (
-            <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>Solicitando permiso de cámara...</Text>
-            </View>
-        );
-    }
-
-    if (!permission.granted) {
-        return (
-            <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>No se concedió el permiso de cámara.</Text>
-            </View>
-        );
-    }
-
-    const renderScene = () => (
+    // Función para la pantalla principal con cámara
+    const MainCameraScreen = () => (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
             {/* Botón modo oscuro / claro */}
             <Button
@@ -82,27 +69,52 @@ function MainScreen() {
         </View>
     );
 
+    // Función para renderizar cada pantalla según la pestaña seleccionada
+    const renderScene = ({ route }) => {
+        switch (route.key) {
+            case 'ofertas':
+                return <OfertasScreen />; // Ahora muestra OfertasScreen
+            case 'config':
+                return <ConfigScreen />;
+            case 'mapa':
+            default:
+                return <MainCameraScreen />;
+        }
+    };
+
+    if (!permission) {
+        return (
+            <View style={styles.permissionContainer}>
+                <Text style={styles.permissionText}>Solicitando permiso de cámara...</Text>
+            </View>
+        );
+    }
+
+    if (!permission.granted) {
+        return (
+            <View style={styles.permissionContainer}>
+                <Text style={styles.permissionText}>No se concedió el permiso de cámara.</Text>
+            </View>
+        );
+    }
+
     return (
         <View style={{ flex: 1 }}>
-            {/* Contenido principal */}
-            <View style={{ flex: 1 }}>
-                {renderScene()}
-            </View>
-
             <StatusBar
                 style={isDarkTheme ? 'light' : 'dark'}
                 backgroundColor={theme.colors.background}
                 translucent={false}
             />
 
-
-            {/* Botón flotante de ayuda */}
-            <FAB
-                icon="help-circle-outline"
-                style={[styles.fab, { backgroundColor: theme.colors.primary }]}
-                color={theme.colors.onPrimary}
-                onPress={() => setShowTutorial(true)}
-            />
+            {/* Botón flotante de ayuda - solo mostrar en pantalla de mapa */}
+            {index === 1 && ( // Solo mostrar en Mapa (índice 1)
+                <FAB
+                    icon="help-circle-outline"
+                    style={[styles.fab, { backgroundColor: theme.colors.primary }]}
+                    color={theme.colors.onPrimary}
+                    onPress={() => setShowTutorial(true)}
+                />
+            )}
 
             {/* Dialog del tutorial */}
             <TutorialDialog
@@ -114,7 +126,7 @@ function MainScreen() {
             <BottomNavigation
                 navigationState={{ index, routes }}
                 onIndexChange={setIndex}
-                renderScene={() => null}
+                renderScene={renderScene}
                 barStyle={{ backgroundColor: theme.colors.menuBg }}
                 activeColor={theme.colors.btIcon}
                 inactiveColor={theme.colors.btIconIn}
@@ -134,11 +146,11 @@ function MainScreen() {
 
 export default function App() {
     return (
-
         <MainScreen />
     );
 }
 
+// Tus estilos permanecen igual...
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -180,10 +192,7 @@ const styles = StyleSheet.create({
         elevation: 6,
     },
     bottomNav: {
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
+        // Quitamos position: 'absolute' para que el BottomNavigation maneje el layout correctamente
     },
     permissionContainer: {
         flex: 1,

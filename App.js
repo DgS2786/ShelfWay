@@ -8,7 +8,11 @@ import MainForm from './assets/Pantallas/D/MainformSC';
 import LoginScreen from './assets/Pantallas/D/LogginSC';
 import RegisterScreen from './assets/Pantallas/D/RegisterSC';
 import ProductsScreen from './assets/Pantallas/D/ProductSC';
-
+import ConfigScreen from './assets/Pantallas/D/ConfigScreen';
+import AvisosScreen from './assets/Pantallas/D/AvisosScreen';
+import Aviso1Screen from './assets/Pantallas/D/Aviso1Screen';
+import Aviso2Screen from './assets/Pantallas/D/Aviso2Screen';
+import OfertasScreen from './assets/Pantallas/D/OfertasSC';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -22,6 +26,11 @@ export default function App() {
           <Stack.Screen name="LoginSC" component={LoginScreen} />
           <Stack.Screen name="Main" component={MainScreen} />
           <Stack.Screen name="Products" component={ProductsScreen} />
+          <Stack.Screen name="Config" component={ConfigScreen} />
+          <Stack.Screen name="Avisos" component={AvisosScreen} />
+          <Stack.Screen name="Aviso1" component={Aviso1Screen} />
+          <Stack.Screen name="Aviso2" component={Aviso2Screen} />
+          <Stack.Screen name="Ofertas" component={OfertasScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeContextProvider>
