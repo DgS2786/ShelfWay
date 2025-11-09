@@ -13,6 +13,9 @@ import AvisosScreen from './assets/Pantallas/M/AvisosScreen';
 import Aviso1Screen from './assets/Pantallas/M/Aviso1Screen';
 import Aviso2Screen from './assets/Pantallas/M/Aviso2Screen';
 import OfertasScreen from './assets/Pantallas/M/OfertasSC';
+import Mapa from './assets/Pantallas/F/Mapa';
+import AnaquelesOfertas from './assets/Pantallas/F/AnaquelesOfertas';
+import ProductoOF from './assets/Pantallas/F/ProductoOF';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -31,6 +34,9 @@ export default function App() {
           <Stack.Screen name="Aviso1" component={Aviso1Screen} />
           <Stack.Screen name="Aviso2" component={Aviso2Screen} />
           <Stack.Screen name="Ofertas" component={OfertasScreen} />
+          <Stack.Screen name="Mapa" component={Mapa} />
+          <Stack.Screen name="AnaquelesOfertas" component={AnaquelesOfertas} />
+          <Stack.Screen name="ProductoOF" component={ProductoOF} />
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeContextProvider>
