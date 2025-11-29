@@ -19,12 +19,14 @@ import OfertasScreen from './assets/Pantallas/M/OfertasSC';
 import Mapa from './assets/Pantallas/F/Mapa';
 import AnaquelesOfertas from './assets/Pantallas/F/AnaquelesOfertas';
 import ProductoOF from './assets/Pantallas/F/ProductoOF';
-import ReporteScreen from './assets/Pantallas/C/Reporte'; 
+import ReporteScreen from './assets/Pantallas/C/Reporte';
 import PersonalizacionScreen from './assets/Pantallas/C/Personalizacion';
 import PreferenciasScreen from './assets/Pantallas/C/Preferencias';
 import NotificacionesScreen from './assets/Pantallas/C/Notificaciones';
 import IdiomaScreen from './assets/Pantallas/C/Idioma';
+import ProductosPorCategoria from './assets/Pantallas/M/ProductosPorCategoria';
 import './assets/Resources/languaje';
+import EventoDetalleScreen from './assets/Pantallas/M/EventoDetalleScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -54,6 +56,11 @@ export default function App() {
           <Stack.Screen name="Preferencias" component={PreferenciasScreen} />
           <Stack.Screen name="Notificaciones" component={NotificacionesScreen} />
           <Stack.Screen name="Idioma" component={IdiomaScreen} />
+          <Stack.Screen name="ProductosPorCategoria" component={ProductosPorCategoria} />
+          <Stack.Screen name="EventoDetalle" component={EventoDetalleScreen}
+            options={{ headerShown: false }}
+          />
+
         </Stack.Navigator>
       </NavigationContainer>
     </ThemeContextProvider>

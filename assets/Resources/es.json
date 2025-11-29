@@ -110,6 +110,17 @@
             "finish": "Finalizar"
         }
     },
+    "offersScreen": {
+        "shelvesWithOffers": "Anaqueles con Ofertas"
+    },
+    "categories": {
+        "dairy": "Lácteos",
+        "meat": "Carnes",
+        "fruits": "Frutas",
+        "vegetables": "Verduras",
+        "drinks": "Bebidas",
+        "cleaning": "Limpieza"
+    },
     "languageScreen": {
         "header_title_language": "Idioma",
         "language_description": "Selecciona el idioma de la aplicación"
