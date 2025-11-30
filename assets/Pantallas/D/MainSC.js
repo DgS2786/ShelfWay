@@ -3,6 +3,8 @@ import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Searchbar, BottomNavigation, FAB, Button } from 'react-native-paper';
 import { ThemeContextProvider, useTheme } from '../../Resources/ThemeProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; // ⭐ CORREGIDO
+import { useTheme } from '../../Resources/ThemeProvider';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
 import TutorialDialog from './TutorialSC';
 import { useNavigation } from '@react-navigation/native';
@@ -24,8 +26,13 @@ function MainScreen() {
     ]);
 
     const { theme, toggleThemeType, isDarkTheme } = useTheme(); 
+    const { theme } = useTheme();
     const [permission, requestPermission] = useCameraPermissions();
     const navigation = useNavigation();
+
+    // Adaptatividad: Obtener dimensiones para ajustar la cámara en horizontal
+    const { width, height } = Dimensions.get('window');
+    const isPortrait = height >= width;
     const [lastMapUrl, setLastMapUrl] = React.useState(null);
     const [scanning, setScanning] = React.useState(false);
     const handleBarcodeScan = ({ data }) => {
@@ -87,9 +94,7 @@ function MainScreen() {
     if (!permission) {
         return (
             <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>
-                    {t('mainScreen.camera.requestingPermission')}
-                </Text>
+                <Text style={styles.permissionText}>Solicitando permiso de cámara...</Text>
             </View>
         );
     }
@@ -97,9 +102,7 @@ function MainScreen() {
     if (!permission.granted) {
         return (
             <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>
-                    {t('mainScreen.camera.denied')}
-                </Text>
+                <Text style={styles.permissionText}>No se concedió el permiso de cámara.</Text>
             </View>
         );
     }
