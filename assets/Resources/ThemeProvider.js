@@ -1,6 +1,6 @@
 import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { Provider as PaperProvider, DefaultTheme as PaperDefaultTheme } from 'react-native-paper';
-import { DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
+import { NavigationContainer, DefaultTheme as NavigationDefaultTheme } from '@react-navigation/native';
 
 // ⭐ DICCIONARIO DE TRADUCCIÓN (i18n)
 const I18N = {
