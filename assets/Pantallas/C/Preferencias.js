@@ -9,19 +9,9 @@ import { useTheme as useAppTheme } from '../../Resources/ThemeProvider';
 function PreferenciasScreen() {
   const paperTheme = useTheme(); 
   const { toggleThemeType, isDarkTheme, i18n } = useAppTheme(); 
-  const paperTheme = useTheme(); 
-  const { toggleThemeType, isDarkTheme, i18n } = useAppTheme(); 
 
   const [checkedTheme, setCheckedTheme] = React.useState(isDarkTheme ? 'oscuro' : 'claro');
-  const [checkedTheme, setCheckedTheme] = React.useState(isDarkTheme ? 'oscuro' : 'claro');
 
-  React.useEffect(() => {
-    if (checkedTheme === 'oscuro' && !isDarkTheme) {
-      toggleThemeType();
-    } else if (checkedTheme === 'claro' && isDarkTheme) {
-      toggleThemeType();
-    }
-  }, [checkedTheme, isDarkTheme, toggleThemeType]);
   React.useEffect(() => {
     if (checkedTheme === 'oscuro' && !isDarkTheme) {
       toggleThemeType();
@@ -32,13 +22,7 @@ function PreferenciasScreen() {
 
   const { width, height } = Dimensions.get('window');
   const isPortrait = height >= width;
-  const { width, height } = Dimensions.get('window');
-  const isPortrait = height >= width;
 
-  return (
-    <SafeAreaView style={[styles.safeArea, { backgroundColor: paperTheme.colors.background }]}>
-      <StatusBar style="light" backgroundColor={paperTheme.colors.primary} />
-      <CustomAppbar title={i18n.header_title_preferences} />
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: paperTheme.colors.background }]}>
       <StatusBar style="light" backgroundColor={paperTheme.colors.primary} />
@@ -89,27 +73,8 @@ function PreferenciasScreen() {
       </ScrollView>
     </SafeAreaView>
   );
-          <RadioButton.Group onValueChange={newValue => setCheckedTheme(newValue)} value={checkedTheme}>
-            <View style={styles.radioButtonContainer}>
-              <Text style={[styles.radioButtonLabel, { color: paperTheme.colors.text }]}>
-                {i18n.theme_light}
-              </Text>
-              <RadioButton value="claro" color={paperTheme.colors.primary} />
-            </View>
-            <View style={styles.radioButtonContainer}>
-              <Text style={[styles.radioButtonLabel, { color: paperTheme.colors.text }]}>
-                {i18n.theme_dark}
-              </Text>
-              <RadioButton value="oscuro" color={paperTheme.colors.primary} />
-            </View>
-          </RadioButton.Group>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
 }
 
-// --- Estilos ---
 // --- Estilos ---
 const styles = StyleSheet.create({
   safeArea: {
@@ -156,4 +121,3 @@ const styles = StyleSheet.create({
 });
 
 export default PreferenciasScreen;
-

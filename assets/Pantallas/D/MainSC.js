@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import { Searchbar, BottomNavigation, FAB, Button } from 'react-native-paper';
+import { ThemeContextProvider, useTheme } from '../../Resources/ThemeProvider';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; // ⭐ CORREGIDO
 import { useTheme } from '../../Resources/ThemeProvider';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { CameraView, useCameraPermissions } from 'expo-camera';
@@ -17,9 +19,20 @@ function MainScreen() {
     const [searchQuery, setSearchQuery] = React.useState('');
     const [index, setIndex] = React.useState(1);
     const [showTutorial, setShowTutorial] = React.useState(false);
+    const [routes] = React.useState([
+        { key: 'ofertas', title: 'Ofertas', icon: 'tag-outline' },
+        { key: 'mapa', title: 'Mapa', icon: 'map-marker-outline' },
+        { key: 'config', title: 'Configuración', icon: 'cog-outline' },
+    ]);
+
+    const { theme, toggleThemeType, isDarkTheme } = useTheme(); 
     const { theme } = useTheme();
     const [permission, requestPermission] = useCameraPermissions();
     const navigation = useNavigation();
+
+    // Adaptatividad: Obtener dimensiones para ajustar la cámara en horizontal
+    const { width, height } = Dimensions.get('window');
+    const isPortrait = height >= width;
     const [lastMapUrl, setLastMapUrl] = React.useState(null);
     const [scanning, setScanning] = React.useState(false);
     const handleBarcodeScan = ({ data }) => {
@@ -73,9 +86,7 @@ function MainScreen() {
     if (!permission) {
         return (
             <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>
-                    {t('mainScreen.camera.requestingPermission')}
-                </Text>
+                <Text style={styles.permissionText}>Solicitando permiso de cámara...</Text>
             </View>
         );
     }
@@ -83,15 +94,43 @@ function MainScreen() {
     if (!permission.granted) {
         return (
             <View style={styles.permissionContainer}>
-                <Text style={styles.permissionText}>
-                    {t('mainScreen.camera.denied')}
-                </Text>
+                <Text style={styles.permissionText}>No se concedió el permiso de cámara.</Text>
             </View>
         );
     }
 
-    const renderMapa = () => (
+    // Lógica para Navegación de Desarrollo
+    const navigateToReporte = () => navigation.navigate('Reporte');
+    const navigateToPersonalizacion = () => navigation.navigate('Personalizacion');
+    const navigateToPreferencias = () => navigation.navigate('Preferencias');
+    const navigateToNotificaciones = () => navigation.navigate('Notificaciones'); 
+    const navigateToIdioma = () => navigation.navigate('Idioma'); 
+    // ⭐ NUEVA FUNCIÓN
+
+
+    const renderScene = () => (
         <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+            
+            {/* Botón modo oscuro / claro */}
+            <Button
+                mode="contained-tonal"
+                onPress={toggleThemeType}
+                style={{ alignSelf: 'center', marginBottom: 10 }}
+            >
+                {isDarkTheme ? '☀️ Modo claro' : '🌙 Modo oscuro'}
+            </Button>
+
+            {/* BOTONES DE NAVEGACIÓN DE DESARROLLO TEMPORAL */}
+            <View style={styles.devButtons}>
+                <Button mode="outlined" compact onPress={navigateToReporte}>
+                    Reporte
+                </Button>
+                <Button mode="outlined" compact onPress={navigateToPersonalizacion}>
+                    Personaliz.
+                </Button>
+            </View>
+            
+            {/* Barra de búsqueda */}
             <Searchbar
                 placeholder={t('mainScreen.searchPlaceholder')}
                 value={searchQuery}
@@ -107,19 +146,13 @@ function MainScreen() {
                 }}
             />
 
-            <View style={styles.cameraWrapper}>
+            {/* Cámara y texto */}
+            <View style={[styles.cameraWrapper, isPortrait ? styles.cameraWrapperPortrait : styles.cameraWrapperLandscape]}>
                 <Text style={[styles.infoText, { color: theme.colors.text }]}>
                     {t('mainScreen.scanInfo')}
                 </Text>
-
-                <View style={styles.cameraV}>
-                    <CameraView
-                        style={StyleSheet.absoluteFillObject}
-                        onBarcodeScanned={handleBarcodeScan}
-                        barcodeScannerSettings={{
-                            barcodeTypes: ['qr', 'ean13', 'ean8', 'code128', 'code39', 'upc_a', 'upc_e'],
-                        }}
-                    />
+                <View style={[styles.cameraV, isPortrait ? styles.cameraVPortrait : styles.cameraVLandscape]}>
+                    <CameraView style={StyleSheet.absoluteFillObject} />
                 </View>
                 {lastMapUrl && (
                     <Button
@@ -194,6 +227,14 @@ const styles = StyleSheet.create({
         paddingTop: 60,
         justifyContent: 'flex-start',
     },
+    // ESTILOS DE DESARROLLO
+    devButtons: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '95%', // Aumentamos el ancho para que quepan los 4 botones
+        alignSelf: 'center',
+        marginBottom: 10,
+    },
     searchbar: {
         width: '85%',
         alignSelf: 'center',
@@ -211,15 +252,31 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         paddingBottom: 40,
-        marginTop: '-60%',
+        // Eliminado: marginTop: '-60%',
+    },
+    // NUEVOS ESTILOS PARA ADAPTAR CÁMARA
+    cameraWrapperPortrait: {
+        // En vertical, usa flex para ocupar el espacio restante
+    },
+    cameraWrapperLandscape: {
+        // En horizontal, es más compacto
+        justifyContent: 'flex-start',
+        paddingTop: 10,
     },
     cameraV: {
-        width: 320,
-        aspectRatio: 1,
         borderRadius: 20,
         overflow: 'hidden',
         backgroundColor: '#000',
         elevation: 8,
+    },
+    cameraVPortrait: {
+        width: 320,
+        aspectRatio: 1, // Cuadrado
+    },
+    cameraVLandscape: {
+        // Reducir el tamaño de la cámara en horizontal para que quepa mejor
+        width: Dimensions.get('window').height * 0.5, // 50% de la altura (que es el ancho en landscape)
+        aspectRatio: 1,
     },
     fab: {
         position: 'absolute',
