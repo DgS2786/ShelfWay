@@ -53,7 +53,7 @@ function ReporteScreen() {
                 apellidos: apellidos.trim(),
                 correo: correo.trim(),
                 problema: problema.trim(),
-                fechaCreacion: serverTimestamp(), // Guarda la hora del servidor
+                fechaCreacion: serverTimestamp(), 
                 status: 'nuevo' 
             });
 
@@ -72,7 +72,7 @@ function ReporteScreen() {
             console.error("Error al guardar reporte: ", error);
             Alert.alert("Error", "No se pudo enviar el reporte. Por favor verifica tu conexión.");
         } finally {
-            setLoading(false); // Desactivar carga pase lo que pase
+            setLoading(false); 
         }
     };
 
@@ -82,7 +82,6 @@ function ReporteScreen() {
         <SafeAreaView style={[styles.safeArea, { backgroundColor: theme.colors.background }]}>
             <StatusBar style="light" backgroundColor={theme.colors.primary} />
 
-            {/* 🔹 Título traducido */}
             <CustomAppbar title={t('reportScreen.header_title')} />
 
             <ScrollView
@@ -90,27 +89,27 @@ function ReporteScreen() {
                 contentContainerStyle={styles.scrollContent}
                 keyboardShouldPersistTaps="handled"
             >
-                {/* Contenido principal */}
+
                 <View style={styles.headerTextContainer}>
                     <Text style={[styles.helpText, {
                         color: theme.colors.text,
                         fontSize: subtitleSize,
                         fontWeight: 'bold'
                     }]}>
-                        {/* 🔹 Clave traducida */}
+
                         {t('reportScreen.help_title')}
                     </Text>
                     <Text style={[styles.instructionText, {
                         color: theme.colors.onSurfaceVariant,
                         fontSize: regularSize
                     }]}>
-                        {/* 🔹 Clave traducida */}
+
                         {t('reportScreen.description')}
                     </Text>
                 </View>
 
                 <View style={styles.formContainer}>
-                    {/* Input Nombre */}
+
                     <TextInput
                         label={t('reportScreen.name_label')}
                         value={nombre}
@@ -124,7 +123,6 @@ function ReporteScreen() {
                         theme={{ colors: { text: theme.colors.text, placeholder: theme.colors.placeholder }, fonts: { regular: { fontSize: regularSize } } }}
                     />
 
-                    {/* Input Apellidos */}
                     <TextInput
                         label={t('reportScreen.lastname_label')}
                         value={apellidos}
@@ -138,7 +136,7 @@ function ReporteScreen() {
                         theme={{ colors: { text: theme.colors.text, placeholder: theme.colors.placeholder }, fonts: { regular: { fontSize: regularSize } } }}
                     />
 
-                    {/* Input Correo electrónico */}
+
                     <TextInput
                         label={t('reportScreen.email_label')}
                         value={correo}
@@ -153,7 +151,7 @@ function ReporteScreen() {
                         theme={{ colors: { text: theme.colors.text, placeholder: theme.colors.placeholder }, fonts: { regular: { fontSize: regularSize } } }}
                     />
 
-                    {/* Área de texto */}
+
                     <TextInput
                         label={t('reportScreen.problem_label')}
                         value={problema}
@@ -168,12 +166,12 @@ function ReporteScreen() {
                         theme={{ colors: { text: theme.colors.text, placeholder: theme.colors.placeholder }, fonts: { regular: { fontSize: regularSize } } }}
                     />
 
-                    {/* Botón ENVIAR */}
+
                     <Button
                         mode="contained"
                         onPress={handleSubmit}
-                        loading={loading} // Muestra spinner si está cargando
-                        disabled={loading} // Deshabilita el botón si está cargando
+                        loading={loading}
+                        disabled={loading} 
                         style={styles.button}
                         icon="check"
                         labelStyle={{ fontSize: regularSize }}
@@ -183,7 +181,7 @@ function ReporteScreen() {
                 </View>
             </ScrollView>
 
-            {/* Componente de Diálogo */}
+
             <Portal>
                 <Dialog visible={dialogVisible} onDismiss={hideDialog} style={{ backgroundColor: theme.colors.surface }}>
                     <Dialog.Title style={{ textAlign: 'center', fontSize: dialogTitleSize, color: theme.colors.onSurface }}>

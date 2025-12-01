@@ -21,7 +21,7 @@ function PersonalizacionScreen() {
     const { theme } = useAppTheme(); 
     const navigation = useNavigation();
 
-    // --- Navegación ---
+
     const goToPreferencias = () => navigation.navigate('Preferencias');
     const goToNotificaciones = () => navigation.navigate('Notificaciones');
     const goToIdioma = () => navigation.navigate('Idioma');
@@ -32,25 +32,24 @@ function PersonalizacionScreen() {
     return (
         <SafeAreaView style={[styles.safeArea, { backgroundColor: paperTheme.colors.background }]}>
             <StatusBar style="light" backgroundColor={paperTheme.colors.primary} />
-            
-            {/* Título de la pantalla */}
+
             <CustomAppbar title={t('customizationScreen.title')} />
 
             <View style={styles.contentContainer}> 
                 <PersonalizacionButton
-                    // ⭐ Usamos la nueva clave específica para el botón Preferencias
+
                     title={t('customizationScreen.btn_preferences')}
                     iconName="tune"
                     onPress={goToPreferencias}
                 />
                 <PersonalizacionButton
-                    // ⭐ Usamos la nueva clave específica para el botón Notificaciones
+
                     title={t('customizationScreen.btn_notifications')}
                     iconName="bell-outline"
                     onPress={goToNotificaciones}
                 />
                 <PersonalizacionButton
-                    // ⭐ Usamos la nueva clave específica para el botón Idioma
+
                     title={t('customizationScreen.btn_language')}
                     iconName="web"
                     onPress={goToIdioma}

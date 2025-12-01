@@ -1,50 +1,111 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, SafeAreaView, ScrollView, Platform } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, ScrollView, Platform, Alert, Linking } from 'react-native';
 import { useTheme, Switch, Divider } from 'react-native-paper';
 import { StatusBar } from 'expo-status-bar';
-
 import { useTranslation } from 'react-i18next';
-
 import CustomAppbar from '../../components/CustomAppbar';
-
 import { useTheme as useAppTheme } from '../../Resources/ThemeProvider'; 
-
-/* //  Lógica de Configuración de Notificaciones (Comentada)
-Notifications.setNotificationHandler({
-    handleNotification: async () => ({
-        shouldShowAlert: true,
-        shouldPlaySound: false,
-        shouldSetBadge: false,
-    }),
-});
-*/
+import * as Notifications from 'expo-notifications';
+import * as Device from 'expo-device';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 function NotificacionesScreen() {
     const paperTheme = useTheme();
     const { t } = useTranslation();
     const { theme } = useAppTheme();
 
-    // Estados de control
-    const [isOffersEnabled, setIsOffersEnabled] = React.useState(false);
     const [isEventsEnabled, setIsEventsEnabled] = React.useState(false);
-    const [isProductsEnabled, setIsProductsEnabled] = React.useState(false);
-    const [notificationPermission, setNotificationPermission] = React.useState(true); 
+    const [notificationPermission, setNotificationPermission] = React.useState(false); 
 
-    /*
-    // --- LÓGICA DE PERMISOS (Comentada) ---
+    // --- LÓGICA DE PERMISOS ---
     const registerForPushNotificationsAsync = async () => {
-        // ... (Tu código de solicitud de permisos aquí)
+        try {
+            if (Platform.OS === 'android') {
+                await Notifications.setNotificationChannelAsync('default', {
+                    name: 'default',
+                    importance: Notifications.AndroidImportance.MAX,
+                    vibrationPattern: [0, 250, 250, 250],
+                    lightColor: '#1976D2',
+                });
+            }
+
+            if (!Device.isDevice) {
+                return false;
+            }
+
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            
+            return finalStatus === 'granted';
+        } catch (error) {
+            console.log("Error configurando notificaciones:", error);
+            return false;
+        }
     };
 
+    //  Verificamos permisos
+    // Cargamos el estado visual del switch
     React.useEffect(() => {
-        // registerForPushNotificationsAsync();
-    }, []);
-    */
+        registerForPushNotificationsAsync().then(granted => {
+            setNotificationPermission(granted);
+        });
 
-    // --- Funciones para Switch ---
-    const toggleOffersSwitch = () => setIsOffersEnabled(previousState => !previousState);
-    const toggleEventsSwitch = () => setIsEventsEnabled(previousState => !previousState);
-    const toggleProductsSwitch = () => setIsProductsEnabled(previousState => !previousState);
+        const loadSwitchState = async () => {
+            try {
+                const savedState = await AsyncStorage.getItem('isEventsEnabled');
+                if (savedState !== null) {
+                    setIsEventsEnabled(savedState === 'true');
+                }
+            } catch (e) {
+                console.log('Error cargando estado:', e);
+            }
+        };
+        loadSwitchState();
+    }, []);
+
+    // --- LÓGICA DEL SWITCH ---
+    const toggleEventsSwitch = async () => {
+
+        if (isEventsEnabled) {
+            setIsEventsEnabled(false);
+            try {
+                await AsyncStorage.setItem('isEventsEnabled', 'false'); 
+            } catch (e) { console.log(e); }
+            return;
+        }
+
+        if (!notificationPermission) {
+            const granted = await registerForPushNotificationsAsync();
+            
+            if (granted) {
+                setNotificationPermission(true);
+                setIsEventsEnabled(true);
+                try {
+                    await AsyncStorage.setItem('isEventsEnabled', 'true'); 
+                } catch (e) { console.log(e); }
+            } else {
+                Alert.alert(
+                    "Permisos requeridos",
+                    "Para recibir notificaciones, necesitas habilitar los permisos en la configuración de tu celular.",
+                    [
+                        { text: "Cancelar", style: "cancel" },
+                        { text: "Ir a Ajustes", onPress: () => Linking.openSettings() }
+                    ]
+                );
+            }
+        } else {
+            setIsEventsEnabled(true);
+            try {
+                await AsyncStorage.setItem('isEventsEnabled', 'true'); 
+            } catch (e) { console.log(e); }
+        }
+    };
+
     const baseSize = theme.baseFontSize || 16;
     const subtitleSize = baseSize - 2;
     const labelSize = baseSize;
@@ -54,13 +115,11 @@ function NotificacionesScreen() {
         <SafeAreaView style={[styles.safeArea, { backgroundColor: paperTheme.colors.background }]}>
             <StatusBar style="light" backgroundColor={paperTheme.colors.primary} />
             
-
             <CustomAppbar title={t('notificationsScreen.title')} />
 
             <ScrollView contentContainerStyle={styles.scrollContent} style={styles.scrollView}>
                 <View style={styles.sectionContainer}>
                     
-
                     {!notificationPermission && (
                         <View style={[styles.warningBox, { backgroundColor: paperTheme.colors.notification }]}>
                             <Text style={[styles.warningText, { fontSize: warningSize }]}>
@@ -75,26 +134,10 @@ function NotificacionesScreen() {
                     }]}>
                         {t('notificationsScreen.description')}
                     </Text>
-                    <Divider style={styles.divider} />
-
-                    {/* Interruptores */}
-                    <View style={styles.switchContainer}>
-                        <Text style={[styles.switchLabel, { 
-                            color: paperTheme.colors.text,
-                            fontSize: labelSize 
-                        }]}>
-                            {t('notificationsScreen.offers')}
-                        </Text>
-                        <Switch
-                            value={isOffersEnabled}
-                            onValueChange={toggleOffersSwitch}
-                            color={paperTheme.colors.primary}
-                        />
-                    </View>
+                    
                     <Divider style={styles.divider} />
 
                     <View style={styles.switchContainer}>
-                        {/* 🔹 CAMBIO: Etiqueta traducida */}
                         <Text style={[styles.switchLabel, { 
                             color: paperTheme.colors.text,
                             fontSize: labelSize 
@@ -107,21 +150,7 @@ function NotificacionesScreen() {
                             color={paperTheme.colors.primary}
                         />
                     </View>
-                    <Divider style={styles.divider} />
-
-                    <View style={styles.switchContainer}>
-                        <Text style={[styles.switchLabel, { 
-                            color: paperTheme.colors.text,
-                            fontSize: labelSize 
-                        }]}>
-                            {t('notificationsScreen.products')}
-                        </Text>
-                        <Switch
-                            value={isProductsEnabled}
-                            onValueChange={toggleProductsSwitch}
-                            color={paperTheme.colors.primary}
-                        />
-                    </View>
+                    
                     <Divider style={styles.divider} />
 
                 </View>

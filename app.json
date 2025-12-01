@@ -7,14 +7,22 @@
     "icon": "./assets/Splash.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+
     "splash": {
       "image": "./assets/SplashW.png",
       "resizeMode": "contain",
       "backgroundColor": "#1976D2"
     },
+
+    "notification": {
+      "icon": "./assets/notification-icon.png",
+      "color": "#1976D2"
+    },
+
     "ios": {
       "supportsTablet": true
     },
+
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/SplashW.png",
@@ -22,11 +30,20 @@
       },
       "edgeToEdgeEnabled": true
     },
+
     "web": {
       "favicon": "./assets/Splash.png"
     },
+
     "plugins": [
-      "expo-camera"
+      "expo-camera",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#1976D2"
+        }
+      ]
     ]
   }
 }

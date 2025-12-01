@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, SafeAreaView, ScrollView, Dimensions } from 're
 import { useTheme, RadioButton, Divider } from 'react-native-paper'; 
 import { StatusBar } from 'expo-status-bar';
 
-// ⭐ IMPORTANTE: Importamos el hook para traducir
+
 import { useTranslation } from 'react-i18next';
 
 import CustomAppbar from '../../components/CustomAppbar';
@@ -12,10 +12,10 @@ import { useTheme as useAppTheme } from '../../Resources/ThemeProvider';
 function PreferenciasScreen() {
   const paperTheme = useTheme(); 
   
-  // ⭐ Obtenemos la función 't'
+
   const { t } = useTranslation();
 
-  // ⭐ Ya NO extraemos i18n de aquí, solo las funciones del tema oscuro
+
   const { toggleThemeType, isDarkTheme } = useAppTheme(); 
 
   const [checkedTheme, setCheckedTheme] = React.useState(isDarkTheme ? 'oscuro' : 'claro');
@@ -47,7 +47,7 @@ function PreferenciasScreen() {
       >
 
         <View style={styles.sectionContainer}>
-          {/* 🔹 CAMBIO: Título de sección traducido */}
+
           <Text
             style={[
               styles.sectionTitle,
@@ -56,8 +56,7 @@ function PreferenciasScreen() {
           >
             {t('preferencesScreen.theme_title')}
           </Text>
-          
-          {/* 🔹 CAMBIO: Descripción traducida */}
+
           <Text
             style={[
               styles.sectionSubtitle,
@@ -70,14 +69,12 @@ function PreferenciasScreen() {
 
           <RadioButton.Group onValueChange={newValue => setCheckedTheme(newValue)} value={checkedTheme}>
             <View style={styles.radioButtonContainer}>
-              {/* 🔹 CAMBIO: Etiqueta traducida */}
               <Text style={[styles.radioButtonLabel, { color: paperTheme.colors.text }]}>
                 {t('preferencesScreen.theme_light')}
               </Text>
               <RadioButton value="claro" color={paperTheme.colors.primary} />
             </View>
             <View style={styles.radioButtonContainer}>
-              {/* 🔹 CAMBIO: Etiqueta traducida */}
               <Text style={[styles.radioButtonLabel, { color: paperTheme.colors.text }]}>
                 {t('preferencesScreen.theme_dark')}
               </Text>

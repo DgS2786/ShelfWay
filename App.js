@@ -3,6 +3,7 @@ import { ThemeContextProvider } from './assets/Resources/ThemeProvider';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaperProvider } from 'react-native-paper'; 
+import NotificationController from './assets/components/NotificationController'; 
 
 import SplashScreen from './assets/Pantallas/D/SplashSC';
 import MainScreen from './assets/Pantallas/D/MainSC';
@@ -29,8 +30,8 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-
     <ThemeContextProvider>
+      <NotificationController />
 
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
