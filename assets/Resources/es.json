@@ -1,223 +1,222 @@
 {
-    "appName": "ShelfWay",
-    "welcomeText": "Bienvenido a ShelfWay, donde perderte en las compras es cosa del pasado!",
-    "login": "Iniciar Sesión",
-    "registerB": "Registrarse",
-    "skipLogin": "Saltar login",
-    "selectLanguage": "Selecciona idioma",
-    "register": {
-        "welcome": "¡Bienvenido!",
-        "emailLabel": "Correo Electrónico",
-        "nameLabel": "Nombre",
-        "passwordLabel": "Contraseña",
-        "confirmPasswordLabel": "Confirmar Contraseña",
-        "passwordMismatch": "Las contraseñas no coinciden",
-        "registerButton": "Registrarse",
-        "alert": {
-            "error": "Error",
-            "passwordMismatch": "Las contraseñas no coinciden",
-            "successTitle": "Registro exitoso",
-            "successMessage": "Tu cuenta ha sido creada correctamente. Revisa tu correo para verificar tu cuenta.",
-            "ok": "OK",
-            "emailInUse": "El correo ya está registrado",
-            "invalidEmail": "Correo electrónico inválido",
-            "weakPassword": "La contraseña debe tener al menos 6 caracteres",
-            "missingPassword": "Ingresa una contraseña"
-        }
-    },
-    "loginScreen": {
-        "welcome": "¡Hola de nuevo!",
-        "emailLabel": "Correo Electrónico",
-        "passwordLabel": "Contraseña",
-        "loginButton": "Iniciar Sesión",
-        "forgotPassword": "Recuperar Contraseña",
-        "cancel": "Cancelar",
-        "send": "Enviar",
-        "alert": {
-            "error": "Error",
-            "emptyFields": "Por favor, ingresa tu correo y contraseña",
-            "emailNotVerifiedTitle": "Correo no verificado",
-            "emailNotVerifiedMessage": "Debes verificar tu correo antes de iniciar sesión. Se ha reenviado el correo de verificación.",
-            "welcomeTitle": "Bienvenido",
-            "welcomeMessage": "Inicio de sesión exitoso, Bienvenido",
-            "continue": "Continuar",
-            "invalidEmail": "Correo electrónico inválido",
-            "wrongCredentials": "Correo o contraseña incorrectos",
-            "otherError": "Ocurrió un error al iniciar sesión o aún no verificas tu cuenta",
-            "resetEmailGeneric": "En caso de existir la cuenta, se ha enviado un correo de recuperación",
-            "success": "Éxito"
-        }
-    },
-    "mainScreen": {
-        "searchPlaceholder": "Buscar",
-        "scanInfo": "Escanea un QR o código de barras",
-        "mapB": "Regresar al mapa",
-        "camera": {
-            "requestingPermission": "Solicitando permiso de cámara...",
-            "denied": "No se concedió el permiso de cámara."
-        },
-        "bottomNav": {
-            "offers": "Ofertas",
-            "map": "Mapa",
-            "settings": "Configuración"
-        }
-    },
-    "productsScreen": {
-        "noProducts": "No se encontraron productos.",
-        "description": "Descripción",
-        "noDescription": "Sin descripción",
-        "shelf": "Anaquel",
-        "noShelf": "No especificado",
-        "offer": "Oferta",
-        "before": "Antes",
-        "price": "Precio",
-        "inStock": "Disponible",
-        "outOfStock": "Agotado",
-        "noOffers": "No hay ofertas disponibles",
-        "priceNow": "AHORA",
-        "moreInfo": "+ info"
-    },
-    "common": {
-        "close": "Cerrar"
-    },
-    "tutorial": {
-        "steps": {
-            "welcome": {
-                "title": "¡Bienvenido!",
-                "text": "Esta es tu pantalla principal. Aquí podrás acceder a todas las funciones."
-            },
-            "qr": {
-                "title": "Escáner QR",
-                "text": "Escanea el QR del mapa para ubicarte o el código de barras de un producto para más información."
-            },
-            "search": {
-                "title": "Buscar",
-                "text": "Usa la barra superior para buscar productos específicos."
-            },
-            "offers": {
-                "title": "Ofertas",
-                "text": "En la sección Ofertas encontrarás promociones en nuestros productos."
-            },
-            "map": {
-                "title": "Mapa",
-                "text": "Consulta dónde se ubica cada producto tras escanear el QR del mapa."
-            },
-            "settings": {
-                "title": "Configuración",
-                "text": "Configura y personaliza la app. Puedes revisar alertas o reportar fallos."
-            }
-        },
-        "buttons": {
-            "previous": "Anterior",
-            "next": "Siguiente",
-            "finish": "Finalizar"
-        }
-    },
-    "offersScreen": {
-        "shelvesWithOffers": "Anaqueles con Ofertas",
-        "title": "Ofertas por Sección"
-    },
-    "categories": {
-        "dairy": "Lácteos",
-        "meat": "Carnes",
-        "fruits": "Frutas",
-        "vegetables": "Verduras",
-        "drinks": "Bebidas",
-        "cleaning": "Limpieza"
-    },
-    "tab": {
-        "offers": "Ofertas",
-        "map": "Mapa",
-        "settings": "Configuración"
-    },
-    "mapScreen": {
-        "title": "Mapa",
-        "QRerror": "Error al cargar el QR",
-        "QRloaded": "QR cargado correctamente",
-        "noQR": "No se ha proporcionado un QR"
-    },
-    "product": {
-        "title": "Producto",
-        "before": "Antes",
-        "now": "AHORA",
-        "noDescription": "Sin descripción disponible.",
-        "notFound": "No se encontró el producto.",
-        "noName": "Producto"
-    },
-    "configScreen": {
-        "notices": "Avisos",
-        "report": "Reporte",
-        "customization": "Personalización"
-    },
-    "avisosScreen": {
-        "supermarketEvents": "Avisos del Supermercado",
-        "supermarketEventsWithCount": "Avisos del Supermercado",
-        "loadingEvents": "Cargando eventos...",
-        "noActiveEvents": "No hay eventos activos en este momento",
-        "untitledEvent": "Evento sin título",
-        "noDescription": "Descripción no disponible",
-        "viewEvent": "Ver Evento",
-        "unspecifiedDate": "Fecha no especificada"
-    },
-    "eventDetail": {
-        "event": "Evento",
-        "untitledEvent": "Evento sin título",
-        "eventImage": "Imagen del evento",
-        "unspecifiedDate": "Fecha no especificada",
-        "fromDate": "Del",
-        "toDate": "Al",
-        "eventType": "Tipo de Evento",
-        "special": "Especial",
-        "specialEvent": "Evento especial",
-        "storeHours": "Horario normal de tienda",
-        "aboutEvent": "Sobre el Evento",
-        "noDescription": "Descripción no disponible para este evento.",
-        "featuredPromotions": "Promociones Destacadas",
-        "termsAndConditions": "Términos y Condiciones",
-        "termsList": "• Promociones válidas durante las fechas del evento\n• No acumulable con otras promociones\n• Productos sujetos a disponibilidad\n• Precios pueden variar sin previo aviso\n• El supermercado se reserva el derecho de modificar las promociones"
-    ,"languageScreen": {
-        "header_title_language": "Idioma",
-        "language_description": "Selecciona el idioma de la aplicación"
-    },
-    "notificationsScreen": {
-        "title": "Notificaciones",
-        "warning": "Habilita los permisos para recibir notificaciones.",
-        "description": "Gestiona las alertas que deseas recibir.",
-        "offers": "Ofertas",
-        "events": "Eventos",
-        "products": "Productos"
-    },
-    "preferencesScreen": {
-        "header_title_preferences": "Preferencias",
-        "theme_title": "Tema",
-        "theme_description": "Personaliza el aspecto de la aplicación",
-        "theme_light": "Claro",
-        "theme_dark": "Oscuro"
-    },
-    "reportScreen": {
-        "header_title": "REPORTE",
-        "error_complete_fields": "Por favor completa todos los campos requeridos.",
-        "help_title": "¿Necesitas ayuda?",
-        "description": "Completa tu reporte aquí para poder brindarte atención personalizada.",
-        "name_label": "Nombre:",
-        "name_placeholder": "Ingresa tu nombre",
-        "lastname_label": "Apellidos:",
-        "lastname_placeholder": "Ingresa tus apellidos",
-        "email_label": "Correo electrónico:",
-        "email_placeholder": "Ingresa tu correo electrónico",
-        "problem_label": "Describe a continuación tu problema:",
-        "button_send": "ENVIAR",
-        "dialog_title": "REPORTE RECIBIDO",
-        "dialog_part1": "Nos pondremos en contacto contigo a través de ",
-        "dialog_part2": ".",
-        "button_ok": "OK"
-    },
-    "customizationScreen": {
-        "title": "Personalización",
-        "btn_preferences": "Preferencias",
-        "btn_notifications": "Notificaciones",
-        "btn_language": "Idioma"
+  "appName": "ShelfWay",
+  "welcomeText": "Bienvenido a ShelfWay, donde perderte en las compras es cosa del pasado!",
+  "login": "Iniciar Sesión",
+  "registerB": "Registrarse",
+  "skipLogin": "Saltar login",
+  "selectLanguage": "Selecciona idioma",
+  "register": {
+    "welcome": "¡Bienvenido!",
+    "emailLabel": "Correo Electrónico",
+    "nameLabel": "Nombre",
+    "passwordLabel": "Contraseña",
+    "confirmPasswordLabel": "Confirmar Contraseña",
+    "passwordMismatch": "Las contraseñas no coinciden",
+    "registerButton": "Registrarse",
+    "alert": {
+      "error": "Error",
+      "passwordMismatch": "Las contraseñas no coinciden",
+      "successTitle": "Registro exitoso",
+      "successMessage": "Tu cuenta ha sido creada correctamente. Revisa tu correo para verificar tu cuenta.",
+      "ok": "OK",
+      "emailInUse": "El correo ya está registrado",
+      "invalidEmail": "Correo electrónico inválido",
+      "weakPassword": "La contraseña debe tener al menos 6 caracteres",
+      "missingPassword": "Ingresa una contraseña"
     }
-}
-    
+  },
+  "loginScreen": {
+    "welcome": "¡Hola de nuevo!",
+    "emailLabel": "Correo Electrónico",
+    "passwordLabel": "Contraseña",
+    "loginButton": "Iniciar Sesión",
+    "forgotPassword": "Recuperar Contraseña",
+    "cancel": "Cancelar",
+    "send": "Enviar",
+    "alert": {
+      "error": "Error",
+      "emptyFields": "Por favor, ingresa tu correo y contraseña",
+      "emailNotVerifiedTitle": "Correo no verificado",
+      "emailNotVerifiedMessage": "Debes verificar tu correo antes de iniciar sesión. Se ha reenviado el correo de verificación.",
+      "welcomeTitle": "Bienvenido",
+      "welcomeMessage": "Inicio de sesión exitoso, Bienvenido",
+      "continue": "Continuar",
+      "invalidEmail": "Correo electrónico inválido",
+      "wrongCredentials": "Correo o contraseña incorrectos",
+      "otherError": "Ocurrió un error al iniciar sesión o aún no verificas tu cuenta",
+      "resetEmailGeneric": "En caso de existir la cuenta, se ha enviado un correo de recuperación",
+      "success": "Éxito"
+    }
+  },
+  "mainScreen": {
+    "searchPlaceholder": "Buscar",
+    "scanInfo": "Escanea un QR o código de barras",
+    "mapB": "Regresar al mapa",
+    "camera": {
+      "requestingPermission": "Solicitando permiso de cámara...",
+      "denied": "No se concedió el permiso de cámara."
+    },
+    "bottomNav": {
+      "offers": "Ofertas",
+      "map": "Mapa",
+      "settings": "Configuración"
+    }
+  },
+  "productsScreen": {
+    "noProducts": "No se encontraron productos.",
+    "description": "Descripción",
+    "noDescription": "Sin descripción",
+    "shelf": "Anaquel",
+    "noShelf": "No especificado",
+    "offer": "Oferta",
+    "before": "Antes",
+    "price": "Precio",
+    "inStock": "Disponible",
+    "outOfStock": "Agotado",
+    "noOffers": "No hay ofertas disponibles",
+    "priceNow": "AHORA",
+    "moreInfo": "+ info"
+  },
+  "common": {
+    "close": "Cerrar"
+  },
+  "tutorial": {
+    "steps": {
+      "welcome": {
+        "title": "¡Bienvenido!",
+        "text": "Esta es tu pantalla principal. Aquí podrás acceder a todas las funciones."
+      },
+      "qr": {
+        "title": "Escáner QR",
+        "text": "Escanea el QR del mapa para ubicarte o el código de barras de un producto para más información."
+      },
+      "search": {
+        "title": "Buscar",
+        "text": "Usa la barra superior para buscar productos específicos."
+      },
+      "offers": {
+        "title": "Ofertas",
+        "text": "En la sección Ofertas encontrarás promociones en nuestros productos."
+      },
+      "map": {
+        "title": "Mapa",
+        "text": "Consulta dónde se ubica cada producto tras escanear el QR del mapa."
+      },
+      "settings": {
+        "title": "Configuración",
+        "text": "Configura y personaliza la app. Puedes revisar alertas o reportar fallos."
+      }
+    },
+    "buttons": {
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "finish": "Finalizar"
+    }
+  },
+  "offersScreen": {
+    "shelvesWithOffers": "Anaqueles con Ofertas",
+    "title": "Ofertas por Sección"
+  },
+  "categories": {
+    "dairy": "Lácteos",
+    "meat": "Carnes",
+    "fruits": "Frutas",
+    "vegetables": "Verduras",
+    "drinks": "Bebidas",
+    "cleaning": "Limpieza"
+  },
+  "tab": {
+    "offers": "Ofertas",
+    "map": "Mapa",
+    "settings": "Configuración"
+  },
+  "mapScreen": {
+    "title": "Mapa",
+    "QRerror": "Error al cargar el QR",
+    "QRloaded": "QR cargado correctamente",
+    "noQR": "No se ha proporcionado un QR"
+  },
+  "product": {
+    "title": "Producto",
+    "before": "Antes",
+    "now": "AHORA",
+    "noDescription": "Sin descripción disponible.",
+    "notFound": "No se encontró el producto.",
+    "noName": "Producto"
+  },
+  "configScreen": {
+    "notices": "Avisos",
+    "report": "Reporte",
+    "customization": "Personalización"
+  },
+  "avisosScreen": {
+    "supermarketEvents": "Avisos del Supermercado",
+    "supermarketEventsWithCount": "Avisos del Supermercado",
+    "loadingEvents": "Cargando eventos...",
+    "noActiveEvents": "No hay eventos activos en este momento",
+    "untitledEvent": "Evento sin título",
+    "noDescription": "Descripción no disponible",
+    "viewEvent": "Ver Evento",
+    "unspecifiedDate": "Fecha no especificada"
+  },
+  "eventDetail": {
+    "event": "Evento",
+    "untitledEvent": "Evento sin título",
+    "eventImage": "Imagen del evento",
+    "unspecifiedDate": "Fecha no especificada",
+    "fromDate": "Del",
+    "toDate": "Al",
+    "eventType": "Tipo de Evento",
+    "special": "Especial",
+    "specialEvent": "Evento especial",
+    "storeHours": "Horario normal de tienda",
+    "aboutEvent": "Sobre el Evento",
+    "noDescription": "Descripción no disponible para este evento.",
+    "featuredPromotions": "Promociones Destacadas",
+    "termsAndConditions": "Términos y Condiciones",
+    "termsList": "• Promociones válidas durante las fechas del evento\n• No acumulable con otras promociones\n• Productos sujetos a disponibilidad\n• Precios pueden variar sin previo aviso\n• El supermercado se reserva el derecho de modificar las promociones"
+  },
+  "languageScreen": {
+    "header_title_language": "Idioma",
+    "language_description": "Selecciona el idioma de la aplicación"
+  },
+  "notificationsScreen": {
+    "title": "Notificaciones",
+    "warning": "Habilita los permisos para recibir notificaciones.",
+    "description": "Gestiona las alertas que deseas recibir.",
+    "offers": "Ofertas",
+    "events": "Eventos",
+    "products": "Productos"
+  },
+  "preferencesScreen": {
+    "header_title_preferences": "Preferencias",
+    "theme_title": "Tema",
+    "theme_description": "Personaliza el aspecto de la aplicación",
+    "theme_light": "Claro",
+    "theme_dark": "Oscuro"
+  },
+  "reportScreen": {
+    "header_title": "REPORTE",
+    "error_complete_fields": "Por favor completa todos los campos requeridos.",
+    "help_title": "¿Necesitas ayuda?",
+    "description": "Completa tu reporte aquí para poder brindarte atención personalizada.",
+    "name_label": "Nombre:",
+    "name_placeholder": "Ingresa tu nombre",
+    "lastname_label": "Apellidos:",
+    "lastname_placeholder": "Ingresa tus apellidos",
+    "email_label": "Correo electrónico:",
+    "email_placeholder": "Ingresa tu correo electrónico",
+    "problem_label": "Describe a continuación tu problema:",
+    "button_send": "ENVIAR",
+    "dialog_title": "REPORTE RECIBIDO",
+    "dialog_part1": "Nos pondremos en contacto contigo a través de ",
+    "dialog_part2": ".",
+    "button_ok": "OK"
+  },
+  "customizationScreen": {
+    "title": "Personalización",
+    "btn_preferences": "Preferencias",
+    "btn_notifications": "Notificaciones",
+    "btn_language": "Idioma"
+  }
 }
